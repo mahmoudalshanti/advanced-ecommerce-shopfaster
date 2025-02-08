@@ -1,0 +1,57 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          String   @id @default(cuid())
+  email       String   @unique
+  password    String
+  fName       String
+  lName       String
+  createdAt   DateTime @default(now())
+  dateOfBirth DateTime
+  country     Json 
+  resetPasswordToken         String?
+  resetPasswordTokenExpiresAt DateTime?
+}
+
+model PendingUser {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  country   Json
+  verificationCode VerificationCode? @relation("PendingUserVerification")
+}
+
+model Admin {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  role      String   @default("admin")
+  verificationCode VerificationCode? @relation("AdminVerification")
+}
+
+model Manager {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  role      String   @default("manager")
+  verificationCode VerificationCode? @relation("ManagerVerification")
+}
+
+model VerificationCode {
+  id        String   @id @default(cuid())
+  code      String   @unique
+  createdAt DateTime @default(now())
+  expireIn  DateTime
+  pendingUserId String? @unique
+  adminId       String? @unique
+  managerId     String? @unique
+  
+  // Relations
+  pendingUser PendingUser? @relation("PendingUserVerification", fields: [pendingUserId], references: [id], onDelete: Cascade, map: "VerificationCode_pendingUser_fkey")
+  admin       Admin?       @relation("AdminVerification", fields: [adminId], references: [id], onDelete: Cascade, map: "VerificationCode_admin_fkey")
+  manager     Manager?     @relation("ManagerVerification", fields: [managerId], references: [id], onDelete: Cascade, map: "VerificationCode_manager_fkey")
+}
