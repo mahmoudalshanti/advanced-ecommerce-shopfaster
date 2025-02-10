@@ -71,10 +71,18 @@ export function birthCheck(
   return false;
 }
 
-export function generateToken(id: string, role = "user") {
-  const token = jwt.sign({ id, role }, process.env.JWT_SECRET || "token_here", {
-    expiresIn: "7d",
-  });
+export function generateToken(
+  id: string,
+  role: string = "user",
+  email: string = ""
+) {
+  const token = jwt.sign(
+    { id, role, email },
+    process.env.JWT_SECRET || "token_here",
+    {
+      expiresIn: "7d",
+    }
+  );
 
   return token;
 }
@@ -84,8 +92,39 @@ const SECRET_KEY = new TextEncoder().encode(process.env.JWT_SECRET as string);
 export async function verifyToken(token: string) {
   try {
     const { payload } = await jwtVerify(token, SECRET_KEY);
-    return payload as { id: string; role: string };
+    return payload as { id: string; role: string; email: string };
   } catch (err) {
     throw new Error("Invalid token");
   }
+}
+
+const value: number = 3;
+
+let currentPage: { id: string; role: string; email: string }[] = [];
+
+export function pagination(payload: any, set_page: number) {
+  const length = payload.length;
+  const pages = Math.ceil(length / value);
+
+  if (payload.length <= 0)
+    return {
+      currentPage,
+      no: 0,
+      pages: 0,
+      step: 0,
+    };
+
+  if (set_page <= 0) set_page = 1;
+  if (pages <= set_page) {
+    set_page = pages;
+  }
+
+  currentPage = payload.slice(set_page * value - value, set_page * value);
+
+  return {
+    currentPage,
+    no: set_page,
+    pages: pages,
+    step: value * set_page,
+  };
 }

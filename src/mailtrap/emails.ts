@@ -1,8 +1,10 @@
 "use server";
 
 import {
+  ADD_MANAGER_EMAIL_TEMPLATE,
   PASSWORD_RESET_REQUEST_TEMPLATE,
   PASSWORD_RESET_SUCCESS_TEMPLATE,
+  REPLACE_EMAIL_TEMPLATE,
   VERIFICATION_EMAIL_TEMPLATE,
   VERIFICATION_EMAIL_TEMPLATE_ADMIN,
 } from "./emailTemplates";
@@ -89,5 +91,37 @@ export async function sendResetSuccessEmail(email: string) {
     });
   } catch (err) {
     throw new Error(`Error sending password reset email`);
+  }
+}
+
+export async function sendReplaceEmail(email: string) {
+  const recipient = [{ email }];
+  try {
+    await mailtrapClient.send({
+      from: sender,
+      to: recipient,
+      subject: "Notice replace your email",
+      html: REPLACE_EMAIL_TEMPLATE.replace("{replaceEmail}", email),
+      category: "Replace email",
+    });
+  } catch (err) {
+    console.log(err);
+    throw new Error(`Error sending replace email`);
+  }
+}
+
+export async function sendNewManagerAdd(email: string, managerEmail: string) {
+  const recipient = [{ email }];
+  try {
+    await mailtrapClient.send({
+      from: sender,
+      to: recipient,
+      subject: "Add new Manager email",
+      html: ADD_MANAGER_EMAIL_TEMPLATE.replace("{addManager}", managerEmail),
+      category: "New Manager",
+    });
+  } catch (err) {
+    console.log(err);
+    throw new Error(`Error sending add new manager email`);
   }
 }

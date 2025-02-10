@@ -37,8 +37,10 @@ model Admin {
 model Manager {
   id        String   @id @default(cuid())
   email     String   @unique
+  createdAt   DateTime @default(now())
   role      String   @default("manager")
   verificationCode VerificationCode? @relation("ManagerVerification")
+  
 }
 
 model VerificationCode {

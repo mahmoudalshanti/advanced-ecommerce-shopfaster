@@ -16,7 +16,14 @@ export async function middleware(req: NextRequest) {
       return NextResponse.redirect(new URL("/unauthorized", req.url));
     }
 
-    return NextResponse.next();
+    const requestHeaders = new Headers(req.headers);
+    requestHeaders.set("x-user-email", decoded.email);
+    requestHeaders.set("x-user-role", decoded.role);
+    requestHeaders.set("x-user-id", decoded.id);
+
+    return NextResponse.next({
+      request: { headers: requestHeaders },
+    });
   } catch (error) {
     return NextResponse.redirect(new URL("/sign-in", req.url));
   }

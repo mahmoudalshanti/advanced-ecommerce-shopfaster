@@ -85,9 +85,11 @@ export async function actionVerifySupervisorCode(code: string) {
       });
 
     const userId = verificationCode.admin?.id || verificationCode.manager?.id;
+    const email =
+      verificationCode.admin?.email || verificationCode.manager?.email;
     const role = verificationCode.admin ? "admin" : "manager"; // Dynamically determine role
 
-    const token = generateToken(userId || "", role);
+    const token = generateToken(userId || "", role, email);
 
     const cookieStore = await cookies();
 

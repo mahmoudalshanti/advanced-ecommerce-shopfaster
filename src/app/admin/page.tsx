@@ -1,6 +1,6 @@
 import VerifyAdmin from "./_components/VerifyAdmin";
 
-function page() {
+function Page() {
   return (
     <div className="mx-auto  max-w-md mt-7">
       <VerifyAdmin />
@@ -8,4 +8,4 @@ function page() {
   );
 }
 
-export default page;
+export default Page;

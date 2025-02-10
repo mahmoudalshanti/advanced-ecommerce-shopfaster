@@ -111,10 +111,60 @@ export const PASSWORD_RESET_REQUEST_TEMPLATE = `
     <p>We received a request to reset your password. If you didn't make this request, please ignore this email.</p>
     <p>To reset your password, click the button below:</p>
     <div style="text-align: center; margin: 30px 0;">
-      <a href="{resetURL}" style="background-color: #000000c2; color: white; padding: 12px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">Reset Password</a>
-    </div>
+      <a href="{resetURL}" style="background-color: #000000c2; color: white; padding: 12px 20px; text-decoration: none; border-radius: 5px; font-weight: ;">Reset Password</a>
+    </div>bold
     <p>This link will expire in 1 hour for security reasons.</p>
     <p>Best regards,<br>Shopfaster Team</p>
+  </div>
+  <div style="text-align: center; margin-top: 20px; color: #888; font-size: 0.8em;">
+    <p>This is an automated message, please do not reply to this email.</p>
+  </div>
+</body>
+</html>
+`;
+
+export const REPLACE_EMAIL_TEMPLATE = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Replace Email</title>
+</head>
+<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
+  <div style="background: #000000c2; padding: 20px; text-align: center;">
+    <h1 style="color: white; margin: 0;">Email Replace</h1>
+  </div>
+  <div style="background-color: #f9f9f9; padding: 20px; border-radius: 0 0 5px 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+    <p>Hello,</p>
+    <p>We received a request to replace your email to new email this email will be invalid.</p>
+     <p style="font-weight: bold; font-size: 1.2rem;">Your new Email is: {replaceEmail}</p>
+     <p>Best regards,<br>Shopfaster Team</p>
+  </div>
+  <div style="text-align: center; margin-top: 20px; color: #888; font-size: 0.8em;">
+    <p>This is an automated message, please do not reply to this email.</p>
+  </div>
+</body>
+</html>
+`;
+
+export const ADD_MANAGER_EMAIL_TEMPLATE = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Manager</title>
+</head>
+<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
+  <div style="background: #000000c2; padding: 20px; text-align: center;">
+    <h1 style="color: white; margin: 0;">Add Manager</h1>
+  </div>
+  <div style="background-color: #f9f9f9; padding: 20px; border-radius: 0 0 5px 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+    <p>Hello,</p>
+    <p>We received a request to Add manager</p>
+     <p style="font-weight: bold; font-size: 1.2rem;">Your new Manager added is: {addManager}</p>
+     <p>Best regards,<br>Shopfaster Team</p>
   </div>
   <div style="text-align: center; margin-top: 20px; color: #888; font-size: 0.8em;">
     <p>This is an automated message, please do not reply to this email.</p>
